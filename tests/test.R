@@ -33,6 +33,8 @@ nsduh_design <-
 	update( 
 		nsduh_design , 
 		
+		one = 1 ,
+		
 		health = 
 			factor( 
 				health , 
