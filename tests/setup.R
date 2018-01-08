@@ -16,9 +16,9 @@ nsduh_cat <-
 # 2014 only
 nsduh_cat <- subset( nsduh_cat , temporalCoverage == 2014 )
 # download the microdata to your local computer
-lodown( "nsduh" , nsduh_cat , 
-	your_email = my_email_address , 
-	your_password = my_password )
+
+
+
 
 library(survey)
 
