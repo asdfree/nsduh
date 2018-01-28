@@ -4,7 +4,7 @@ Title: nsduh
 Version: 0.1.0
 Author: Anthony Joseph Damico
 Maintainer: Anthony Joseph Damico <ajdamico@gmail.com>
-Description: A continuous integration package, tested on ajdamico/asdfree commit 7ce6ad0281dac2ae62a3edd368b18b78f25aee11 ajdamico/lodown commit 9fae6617e9e295cb440d239c7dfefab6046aab8c
+Description: A continuous integration package, tested on ajdamico/asdfree commit f780bf31597430e6dfe38fbd23ba918ba0d68ebd ajdamico/lodown commit 968fd623779a9b011be11535bd9257aaa7b4da26
 License: GPL-3
 Imports: survey, lodown, srvyr
 Encoding: UTF-8
