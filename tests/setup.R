@@ -1,22 +1,21 @@
 if ( .Platform$OS.type == 'windows' ) memory.limit( 256000 )
 
 options("lodown.cachaca.savecache"=FALSE)
-my_email_address <- Sys.getenv( "my_email_address" )
-my_password <- Sys.getenv( "my_password" )
+
 library(lodown)
 lodown( "nsduh" , output_dir = file.path( getwd() ) , 
-	your_email = my_email_address , 
-	your_password = my_password )
+	your_email = "email@address.com" , 
+	your_password = "password" )
 library(lodown)
 # examine all available NSDUH microdata files
 nsduh_cat <-
 	get_catalog( "nsduh" ,
 		output_dir = file.path( getwd() ) , 
-		your_email = my_email_address , 
-		your_password = my_password )
+		your_email = "email@address.com" , 
+		your_password = "password" )
 
-# 2014 only
-nsduh_cat <- subset( nsduh_cat , temporalCoverage == 2014 )
+# 2016 only
+nsduh_cat <- subset( nsduh_cat , year == 2016 )
 # download the microdata to your local computer
 
 
@@ -25,7 +24,7 @@ nsduh_cat <- subset( nsduh_cat , temporalCoverage == 2014 )
 library(survey)
 
 nsduh_df <- 
-	readRDS( file.path( getwd() , "2014 main.rds" ) )
+	readRDS( file.path( getwd() , "2016 main.rds" ) )
 
 nsduh_design <- 
 	svydesign( 
