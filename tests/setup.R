@@ -2,10 +2,18 @@ if ( .Platform$OS.type == 'windows' ) memory.limit( 256000 )
 
 options("lodown.cachaca.savecache"=FALSE)
 
+this_sample_break <- Sys.getenv( "this_sample_break" )
+
 library(lodown)
-lodown( "nsduh" , output_dir = file.path( getwd() ) , 
-	your_email = "email@address.com" , 
-	your_password = "password" )
+
+nsduh_cat <-
+	get_catalog( "nsduh" ,
+		output_dir = file.path( getwd() ) )
+
+nsduh_cat <- nsduh_cat[ split( seq( nrow( nsduh_cat ) ) , 1 + sort( seq( nrow( nsduh_cat ) ) %% 3 ) )[[ this_sample_break ]] , ]
+
+lodown( "nsduh" , nsduh_cat )
+if( any( nsduh_cat$year == 2016 ) ){
 library(lodown)
 # examine all available NSDUH microdata files
 nsduh_cat <-
@@ -150,3 +158,4 @@ nsduh_srvyr_design %>%
 	group_by( county_type ) %>%
 	summarize( mean = survey_mean( age_tried_first_cigarette , na.rm = TRUE ) )
 
+}
