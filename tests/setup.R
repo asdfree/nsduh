@@ -10,7 +10,7 @@ nsduh_cat <-
 	get_catalog( "nsduh" ,
 		output_dir = file.path( getwd() ) )
 
-nsduh_cat <- nsduh_cat[ split( seq( nrow( nsduh_cat ) ) , 1 + sort( seq( nrow( nsduh_cat ) ) %% 20 ) )[[ this_sample_break ]] , ]
+nsduh_cat <- nsduh_cat[ split( seq( nrow( nsduh_cat ) ) , 1 + sort( seq( nrow( nsduh_cat ) ) %% 5 ) )[[ this_sample_break ]] , ]
 
 lodown( "nsduh" , nsduh_cat )
 if( any( nsduh_cat$year == 2016 ) ){
