@@ -13,12 +13,14 @@ nsduh_cat <-
 nsduh_cat <- nsduh_cat[ split( seq( nrow( nsduh_cat ) ) , 1 + sort( seq( nrow( nsduh_cat ) ) %% 5 ) )[[ this_sample_break ]] , ]
 
 lodown( "nsduh" , nsduh_cat )
+print('lodown( "nsduh" , nsduh_cat ) finished')
 if( any( nsduh_cat$year == 2016 ) ){
 library(lodown)
 # examine all available NSDUH microdata files
 nsduh_cat <-
 	get_catalog( "nsduh" ,
 		output_dir = file.path( getwd() ) )
+print('get_catalog two finished')
 
 # 2016 only
 nsduh_cat <- subset( nsduh_cat , year == 2016 )
@@ -29,7 +31,7 @@ library(survey)
 
 nsduh_df <- 
 	readRDS( file.path( getwd() , "2016 main.rds" ) )
-
+print('readRDS finished')
 nsduh_design <- 
 	svydesign( 
 		id = ~ verep , 
@@ -38,6 +40,7 @@ nsduh_design <-
 		weights = ~ analwt_c , 
 		nest = TRUE 
 	)
+print('svydesign finished')
 nsduh_design <- 
 	update( 
 		nsduh_design , 
@@ -67,7 +70,7 @@ nsduh_design <-
 			
 	)
 sum( weights( nsduh_design , "sampling" ) != 0 )
-
+print('sum(weights( finished')
 svyby( ~ one , ~ county_type , nsduh_design , unwtd.count )
 svytotal( ~ one , nsduh_design )
 
@@ -103,6 +106,8 @@ svyratio(
 	na.rm = TRUE
 )
 sub_nsduh_design <- subset( nsduh_design , preg == 1 )
+
+print('subset finished')
 svymean( ~ age_tried_first_cigarette , sub_nsduh_design , na.rm = TRUE )
 this_result <- svymean( ~ age_tried_first_cigarette , nsduh_design , na.rm = TRUE )
 
@@ -128,16 +133,19 @@ degf( nsduh_design )
 svyvar( ~ age_tried_first_cigarette , nsduh_design , na.rm = TRUE )
 # SRS without replacement
 svymean( ~ age_tried_first_cigarette , nsduh_design , na.rm = TRUE , deff = TRUE )
-
+print('srs without replacement finished')
 # SRS with replacement
 svymean( ~ age_tried_first_cigarette , nsduh_design , na.rm = TRUE , deff = "replace" )
 svyciprop( ~ ever_used_marijuana , nsduh_design ,
 	method = "likelihood" , na.rm = TRUE )
 svyttest( age_tried_first_cigarette ~ ever_used_marijuana , nsduh_design )
+
+print('svyttest finished')
 svychisq( 
 	~ ever_used_marijuana + health , 
 	nsduh_design 
 )
+print('svychisq finished')
 glm_result <- 
 	svyglm( 
 		age_tried_first_cigarette ~ ever_used_marijuana + health , 
@@ -145,6 +153,7 @@ glm_result <-
 	)
 
 summary( glm_result )
+print('glm_result finished')
 library(srvyr)
 nsduh_srvyr_design <- as_survey( nsduh_design )
 nsduh_srvyr_design %>%
