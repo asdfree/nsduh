@@ -12,17 +12,17 @@ nsduh_cat <-
 
 nsduh_cat <- nsduh_cat[ split( seq( nrow( nsduh_cat ) ) , 1 + sort( seq( nrow( nsduh_cat ) ) %% 5 ) )[[ this_sample_break ]] , ]
 
-lodown( "nsduh" , nsduh_cat )
+nsduh_cat <- lodown( "nsduh" , nsduh_cat )
 if( any( nsduh_cat$year == 2016 ) ){
-library(lodown)
-# examine all available NSDUH microdata files
-nsduh_cat <-
-	get_catalog( "nsduh" ,
-		output_dir = file.path( getwd() ) )
 
-# 2016 only
-nsduh_cat <- subset( nsduh_cat , year == 2016 )
-# download the microdata to your local computer
+
+
+
+
+
+
+
+
 
 
 library(survey)
