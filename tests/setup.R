@@ -50,7 +50,7 @@ nsduh_design <-
 					"fair" , "poor" )
 			) ,
 			
-		age_tried_first_cigarette = ifelse( cigtry > 99 , NA , cigtry ) ,
+		age_first_cigarette = ifelse( cigtry > 99 , NA , cigtry ) ,
 		
 		age_tried_cocaine = ifelse( cocage > 99 , NA , cocage ) ,
 
@@ -70,22 +70,22 @@ svyby( ~ one , ~ county_type , nsduh_design , unwtd.count )
 svytotal( ~ one , nsduh_design )
 
 svyby( ~ one , ~ county_type , nsduh_design , svytotal )
-svymean( ~ age_tried_first_cigarette , nsduh_design , na.rm = TRUE )
+svymean( ~ age_first_cigarette , nsduh_design , na.rm = TRUE )
 
-svyby( ~ age_tried_first_cigarette , ~ county_type , nsduh_design , svymean , na.rm = TRUE )
+svyby( ~ age_first_cigarette , ~ county_type , nsduh_design , svymean , na.rm = TRUE )
 svymean( ~ health , nsduh_design , na.rm = TRUE )
 
 svyby( ~ health , ~ county_type , nsduh_design , svymean , na.rm = TRUE )
-svytotal( ~ age_tried_first_cigarette , nsduh_design , na.rm = TRUE )
+svytotal( ~ age_first_cigarette , nsduh_design , na.rm = TRUE )
 
-svyby( ~ age_tried_first_cigarette , ~ county_type , nsduh_design , svytotal , na.rm = TRUE )
+svyby( ~ age_first_cigarette , ~ county_type , nsduh_design , svytotal , na.rm = TRUE )
 svytotal( ~ health , nsduh_design , na.rm = TRUE )
 
 svyby( ~ health , ~ county_type , nsduh_design , svytotal , na.rm = TRUE )
-svyquantile( ~ age_tried_first_cigarette , nsduh_design , 0.5 , na.rm = TRUE )
+svyquantile( ~ age_first_cigarette , nsduh_design , 0.5 , na.rm = TRUE )
 
 svyby( 
-	~ age_tried_first_cigarette , 
+	~ age_first_cigarette , 
 	~ county_type , 
 	nsduh_design , 
 	svyquantile , 
@@ -93,14 +93,14 @@ svyby(
 	ci = TRUE , na.rm = TRUE
 )
 svyratio( 
-	numerator = ~ age_tried_first_cigarette , 
+	numerator = ~ age_first_cigarette , 
 	denominator = ~ age_tried_cocaine , 
 	nsduh_design ,
 	na.rm = TRUE
 )
 sub_nsduh_design <- subset( nsduh_design , preg == 1 )
-svymean( ~ age_tried_first_cigarette , sub_nsduh_design , na.rm = TRUE )
-this_result <- svymean( ~ age_tried_first_cigarette , nsduh_design , na.rm = TRUE )
+svymean( ~ age_first_cigarette , sub_nsduh_design , na.rm = TRUE )
+this_result <- svymean( ~ age_first_cigarette , nsduh_design , na.rm = TRUE )
 
 coef( this_result )
 SE( this_result )
@@ -109,7 +109,7 @@ cv( this_result )
 
 grouped_result <-
 	svyby( 
-		~ age_tried_first_cigarette , 
+		~ age_first_cigarette , 
 		~ county_type , 
 		nsduh_design , 
 		svymean ,
@@ -121,22 +121,22 @@ SE( grouped_result )
 confint( grouped_result )
 cv( grouped_result )
 degf( nsduh_design )
-svyvar( ~ age_tried_first_cigarette , nsduh_design , na.rm = TRUE )
+svyvar( ~ age_first_cigarette , nsduh_design , na.rm = TRUE )
 # SRS without replacement
-svymean( ~ age_tried_first_cigarette , nsduh_design , na.rm = TRUE , deff = TRUE )
+svymean( ~ age_first_cigarette , nsduh_design , na.rm = TRUE , deff = TRUE )
 
 # SRS with replacement
-svymean( ~ age_tried_first_cigarette , nsduh_design , na.rm = TRUE , deff = "replace" )
+svymean( ~ age_first_cigarette , nsduh_design , na.rm = TRUE , deff = "replace" )
 svyciprop( ~ ever_used_marijuana , nsduh_design ,
 	method = "likelihood" , na.rm = TRUE )
-svyttest( age_tried_first_cigarette ~ ever_used_marijuana , nsduh_design )
+svyttest( age_first_cigarette ~ ever_used_marijuana , nsduh_design )
 svychisq( 
 	~ ever_used_marijuana + health , 
 	nsduh_design 
 )
 glm_result <- 
 	svyglm( 
-		age_tried_first_cigarette ~ ever_used_marijuana + health , 
+		age_first_cigarette ~ ever_used_marijuana + health , 
 		nsduh_design 
 	)
 
@@ -144,11 +144,11 @@ summary( glm_result )
 library(srvyr)
 nsduh_srvyr_design <- as_survey( nsduh_design )
 nsduh_srvyr_design %>%
-	summarize( mean = survey_mean( age_tried_first_cigarette , na.rm = TRUE ) )
+	summarize( mean = survey_mean( age_first_cigarette , na.rm = TRUE ) )
 
 nsduh_srvyr_design %>%
 	group_by( county_type ) %>%
-	summarize( mean = survey_mean( age_tried_first_cigarette , na.rm = TRUE ) )
+	summarize( mean = survey_mean( age_first_cigarette , na.rm = TRUE ) )
 result <- svymean( ~ alcmon , nsduh_design )
 
 stopifnot( round( coef( result ) , 3 ) == 0.474 )
