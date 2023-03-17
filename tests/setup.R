@@ -141,6 +141,10 @@ glm_result <-
 	)
 
 summary( glm_result )
+result <- svymean( ~ alcmon , nsduh_design )
+
+stopifnot( round( coef( result ) , 3 ) == 0.474 )
+stopifnot( round( SE( result ) , 4 ) == 0.0043 )
 library(srvyr)
 nsduh_srvyr_design <- as_survey( nsduh_design )
 nsduh_srvyr_design %>%
@@ -149,7 +153,3 @@ nsduh_srvyr_design %>%
 nsduh_srvyr_design %>%
 	group_by( county_type ) %>%
 	summarize( mean = survey_mean( age_first_cigarette , na.rm = TRUE ) )
-result <- svymean( ~ alcmon , nsduh_design )
-
-stopifnot( round( coef( result ) , 3 ) == 0.474 )
-stopifnot( round( SE( result ) , 4 ) == 0.0043 )
