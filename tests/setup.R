@@ -4,11 +4,7 @@
 zip_tf <- tempfile()
 
 zip_url <-
-	paste0(
-		"https://www.datafiles.samhsa.gov/sites/default/files/field-uploads-protected/" ,
-		"studies/NSDUH-2021/NSDUH-2021-datasets/NSDUH-2021-DS0001/" ,
-		"NSDUH-2021-DS0001-bundles-with-study-info/NSDUH-2021-DS0001-bndl-data-r_v3.zip"
-	)
+	"https://www.samhsa.gov/data/system/files/media-puf-file/NSDUH-2023-DS0001-bndl-data-r_v1.zip"
 	
 download.file( zip_url , zip_tf , mode = 'wb' )
 
@@ -143,8 +139,8 @@ glm_result <-
 summary( glm_result )
 result <- svymean( ~ alcmon , nsduh_design )
 
-stopifnot( round( coef( result ) , 3 ) == 0.474 )
-stopifnot( round( SE( result ) , 4 ) == 0.0043 )
+stopifnot( round( coef( result ) , 3 ) == 0.477 )
+stopifnot( round( SE( result ) , 4 ) == 0.0049 )
 library(srvyr)
 nsduh_srvyr_design <- as_survey( nsduh_design )
 nsduh_srvyr_design %>%
