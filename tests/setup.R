@@ -12,7 +12,7 @@ nsduh_rdata <- unzip( zip_tf , exdir = tempdir() )
 
 nsduh_rdata_contents <- load( nsduh_rdata )
 
-nsduh_df_name <- grep( 'PUF' , nsduh_rdata_contents , value = TRUE )
+nsduh_df_name <- grep( 'PUF' , nsduh_rdata_contents , value = TRUE , ignore.case = TRUE )
 
 nsduh_df <- get( nsduh_df_name )
 
@@ -29,7 +29,7 @@ nsduh_design <-
 		id = ~ verep , 
 		strata = ~ vestr_c , 
 		data = nsduh_df , 
-		weights = ~ analwt_c , 
+		weights = ~ analwt2_c , 
 		nest = TRUE 
 	)
 nsduh_design <- 
